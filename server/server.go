@@ -216,7 +216,7 @@ func (s *Server) httpServer() error {
 
 	ctx, _ = context.WithCancel(context.Background())
 	runtimeMux := runtime.NewServeMux(s.httpGatewayOptions...)
-	runtime.HTTPError = runtime.VedHTTPError
+	runtime.HTTPError = runtime.HTTPError
 
 	for _, register := range s.httpRegisters {
 		err = register(ctx, runtimeMux, fmt.Sprintf("127.0.0.1:%d", s.rpcPort), []grpc.DialOption{grpc.WithInsecure()})
