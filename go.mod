@@ -1,4 +1,4 @@
-module doraemon
+module github.com/tiny911/doraemon
 
 go 1.12
 
@@ -17,7 +17,7 @@ require (
 	go.uber.org/atomic v1.4.0 // indirect
 	go.uber.org/multierr v1.1.0 // indirect
 	go.uber.org/zap v1.10.0
-	golang.org/x/net v0.0.0-20190613194153-d28f0bde5980
+	golang.org/x/net v0.0.0-20190619014844-b5b0513f8c1b
 	google.golang.org/grpc v1.21.1
 	gopkg.in/yaml.v2 v2.2.2
 )
