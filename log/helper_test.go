@@ -3,7 +3,7 @@ package log
 import "testing"
 
 var (
-	path = "/data/project/"
+	path = "./"
 	prj  = "testPrj"
 )
 
