@@ -5,16 +5,16 @@ import (
 	"os/signal"
 	"syscall"
 
-//	_ "common/config" //加载config
+	//	_ "common/config" //加载config
 
-	"github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
+	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"golang.org/x/net/context"
 )
 
 const (
-	defaultLogPath  = "/data/prjlogs/"
+	defaultLogPath  = "./"
 	defaultSvrName  = "unknown"
 	defaultLogLevel = "info"
 )
