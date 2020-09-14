@@ -23,7 +23,6 @@ import (
 	"github.com/tiny911/doraemon/assembly/prometheus"
 	"github.com/tiny911/doraemon/assembly/recovery"
 	"github.com/tiny911/doraemon/log"
-	"github.com/tiny911/doraemon/naming"
 	"github.com/tiny911/gobase/utils"
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
@@ -48,7 +47,8 @@ type Server struct {
 	httpPort      int            //http端口
 	httpRegisters []HTTPRegister //http注册
 
-	naming       *naming.Naming     //naming
+	//naming       *naming.Naming     //naming
+
 	assembly     *assembly.Assembly //assembly
 	interceptors []assembly.IInterceptor
 
@@ -156,16 +156,16 @@ func (s *Server) Run() {
 	go s.rpcServer()  //rpc服务
 	go s.httpServer() //代理http server
 
-	{ //注册naming
-		s.naming = naming.New(
-			s.name,
-			s.hostIP,
-			s.environment,
-			s.rpcPort,
-			s.httpPort,
-		)
-		go s.naming.Regist(os.Getenv("ENV_NAMING_ADDR"), os.Getenv("ENV_NAMING_IDC"))
-	}
+	// { //注册naming
+	// 	s.naming = naming.New(
+	// 		s.name,
+	// 		s.hostIP,
+	// 		s.environment,
+	// 		s.rpcPort,
+	// 		s.httpPort,
+	// 	)
+	// 	go s.naming.Regist(os.Getenv("ENV_NAMING_ADDR"), os.Getenv("ENV_NAMING_IDC"))
+	// }
 
 	<-s.quitChan
 }
@@ -174,7 +174,7 @@ func (s *Server) Run() {
 func (s *Server) Stop() {
 	ctx, _ := context.WithTimeout(context.Background(), s.quitTimeout)
 
-	s.naming.UnRegist()
+	//s.naming.UnRegist()
 	s.HTTPSvr.Shutdown(ctx)
 	s.RPCSvr.GracefulStop()
 	s.assembly.Unload()

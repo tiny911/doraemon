@@ -1,18 +1,17 @@
 module github.com/tiny911/doraemon
 
-go 1.12
+go 1.15
 
 require (
-	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
+	github.com/grpc-ecosystem/go-grpc-middleware v1.2.2
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
-	github.com/grpc-ecosystem/grpc-gateway v1.9.2
-	github.com/hashicorp/consul/api v1.1.0
-	github.com/opentracing/opentracing-go v1.1.0
-	github.com/openzipkin/zipkin-go-opentracing v0.3.5
-	github.com/prometheus/client_golang v1.0.0
-	github.com/tiny911/gobase v0.0.0-20190619021825-5678a711babc
-	go.uber.org/zap v1.10.0
-	golang.org/x/net v0.0.0-20190619014844-b5b0513f8c1b
-	google.golang.org/grpc v1.21.1
-	gopkg.in/yaml.v2 v2.2.2
+	github.com/grpc-ecosystem/grpc-gateway v1.14.8
+	github.com/opentracing/opentracing-go v1.2.0
+	github.com/openzipkin-contrib/zipkin-go-opentracing v0.4.5
+	github.com/prometheus/client_golang v1.7.1
+	github.com/tiny911/gobase v0.0.0-20200907071902-3ab36908f538
+	go.uber.org/zap v1.16.0
+	golang.org/x/net v0.0.0-20200904194848-62affa334b73
+	google.golang.org/grpc v1.32.0
+	gopkg.in/yaml.v2 v2.3.0
 )
