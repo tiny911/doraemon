@@ -1,15 +1,10 @@
 package opentracing
 
 import (
-	"fmt"
-	"log"
 	"os"
-	"strconv"
-	"strings"
 
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	opentracing "github.com/opentracing/opentracing-go"
-	zipkin "github.com/openzipkin-contrib/zipkin-go-opentracing"
 	"github.com/tiny911/doraemon/assembly"
 )
 
@@ -27,11 +22,11 @@ var (
 )
 
 type Interceptor struct {
-	svrName   string
-	svrAddr   string
-	tracer    opentracing.Tracer
-	collector zipkin.Collector
-	assembly  *assembly.Assembly
+	svrName string
+	svrAddr string
+	tracer  opentracing.Tracer
+	//collector zipkin.Collector
+	assembly *assembly.Assembly
 }
 
 func (this *Interceptor) With(assembly *assembly.Assembly) {
@@ -54,9 +49,9 @@ func (this *Interceptor) Unload() {
 		return
 	}
 
-	if this.collector != nil {
-		this.collector.Close()
-	}
+	// if this.collector != nil {
+	// 	this.collector.Close()
+	// }
 }
 
 func (this *Interceptor) setupUSI() {
@@ -77,66 +72,66 @@ func (this *Interceptor) setupSCI() {
 
 func New(svrName, svrAddr string) *Interceptor {
 	var (
-		err       error
-		tracer    opentracing.Tracer
-		collector zipkin.Collector
+		//err    error
+		tracer opentracing.Tracer
+		//collector zipkin.Collector
 	)
 
-	if tracer, collector, err = newTracer(svrName, svrAddr); err != nil {
-		tracer = opentracing.NoopTracer{}
-		log.Printf("[trace] init failed, err:%s.\n", err)
-	}
+	// if tracer, collector, err = newTracer(svrName, svrAddr); err != nil {
+	// 	tracer = opentracing.NoopTracer{}
+	// 	log.Printf("[trace] init failed, err:%s.\n", err)
+	// }
 
 	return &Interceptor{
-		svrName:   svrName,
-		svrAddr:   svrAddr,
-		tracer:    tracer,
-		collector: collector,
+		svrName: svrName,
+		svrAddr: svrAddr,
+		tracer:  tracer,
+		//collector: collector,
 	}
 }
 
-func newTracer(svrName, svrAddr string) (opentracing.Tracer, zipkin.Collector, error) {
-	var (
-		traceCollectType = defaultTraceCollectType
-		traceCollectAddr = defaultTraceCollectAddr
-		traceSampleRate  = defaultTraceSampleRate
-		collector        zipkin.Collector
-		tracer           opentracing.Tracer
-		err              error
-	)
+// func newTracer(svrName, svrAddr string) (opentracing.Tracer, zipkin.Collector, error) {
+// 	var (
+// 		traceCollectType = defaultTraceCollectType
+// 		traceCollectAddr = defaultTraceCollectAddr
+// 		traceSampleRate  = defaultTraceSampleRate
+// 		collector        zipkin.Collector
+// 		tracer           opentracing.Tracer
+// 		err              error
+// 	)
 
-	if collectType := os.Getenv("ENV_TRACE_COLLECT_TYPE"); collectType != "" {
-		traceCollectType = collectType
-	}
+// 	if collectType := os.Getenv("ENV_TRACE_COLLECT_TYPE"); collectType != "" {
+// 		traceCollectType = collectType
+// 	}
 
-	if collectAddr := os.Getenv("ENV_TRACE_COLLECT_ADDR"); collectAddr != "" {
-		traceCollectAddr = collectAddr
-	}
+// 	if collectAddr := os.Getenv("ENV_TRACE_COLLECT_ADDR"); collectAddr != "" {
+// 		traceCollectAddr = collectAddr
+// 	}
 
-	if sampleRate := os.Getenv("ENV_TRACE_SAMPLE_RATE"); sampleRate != "" {
-		traceSampleRate = sampleRate
-	}
+// 	if sampleRate := os.Getenv("ENV_TRACE_SAMPLE_RATE"); sampleRate != "" {
+// 		traceSampleRate = sampleRate
+// 	}
 
-	switch traceCollectType {
-	case "http":
-		collector, err = zipkin.NewHTTPCollector(fmt.Sprintf("http://%s/api/v1/spans", traceCollectAddr))
-	case "kafka":
-		collector, err = zipkin.NewKafkaCollector(strings.Split(traceCollectAddr, ","))
-	default:
-		log.Panicf("[trace] collector type[%s] is illegal.\n", traceCollectType)
-	}
+// 	switch traceCollectType {
+// 	case "http":
+// 		collector, err = zipkin.NewHTTPCollector(fmt.Sprintf("http://%s/api/v1/spans", traceCollectAddr))
+// 	case "kafka":
+// 		collector, err = zipkin.NewKafkaCollector(strings.Split(traceCollectAddr, ","))
+// 	default:
+// 		log.Panicf("[trace] collector type[%s] is illegal.\n", traceCollectType)
+// 	}
 
-	if err != nil {
-		return nil, nil, err
-	}
+// 	if err != nil {
+// 		return nil, nil, err
+// 	}
 
-	rate, _ := strconv.ParseFloat(traceSampleRate, 32)
-	tracer, err = zipkin.NewTracer(
-		zipkin.NewRecorder(collector, false, svrAddr, svrName),
-		zipkin.ClientServerSameSpan(true),
-		zipkin.TraceID128Bit(true),
-		zipkin.WithSampler(zipkin.NewCountingSampler(rate)),
-	)
+// 	rate, _ := strconv.ParseFloat(traceSampleRate, 32)
+// 	tracer, err = zipkin.NewTracer(
+// 		zipkin.NewRecorder(collector, false, svrAddr, svrName),
+// 		zipkin.ClientServerSameSpan(true),
+// 		zipkin.TraceID128Bit(true),
+// 		zipkin.WithSampler(zipkin.NewCountingSampler(rate)),
+// 	)
 
-	return tracer, collector, err
-}
+// 	return tracer, collector, err
+// }
