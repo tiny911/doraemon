@@ -25,6 +25,7 @@ import (
 	"github.com/tiny911/doraemon/log"
 	"github.com/tiny911/gobase/utils"
 
+	"github.com/gorilla/handlers"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
@@ -227,7 +228,7 @@ func (s *Server) httpServer() error {
 	}
 
 	handler := http.DefaultServeMux
-	handler.Handle("/", runtimeMux)
+	handler.Handle("/", handlers.CompressHandler(runtimeMux))
 
 	s.HTTPSvr = &http.Server{
 		Addr:    fmt.Sprintf(":%d", s.httpPort),
