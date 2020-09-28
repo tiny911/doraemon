@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	defaultLogPath  = "./"
+	defaultLogPath  = "."
 	defaultSvrName  = "unknown"
 	defaultLogLevel = "info"
 )

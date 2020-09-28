@@ -47,8 +47,6 @@ func (this *logHelper) SetLogLevel(level string) {
 	default:
 		log.Panicf("[logger] level[%s] is illegal.", level)
 	}
-
-	return
 }
 
 func (this *logHelper) GetLogKit() *zap.Logger {
@@ -110,7 +108,6 @@ func (this *logHelper) loadKit() {
 	grpc_zap.ReplaceGrpcLogger(logger)
 	this.logKit = logger
 	this.config = cfg
-	return
 }
 
 func (this *logHelper) islogFileExist() bool {
@@ -119,7 +116,7 @@ func (this *logHelper) islogFileExist() bool {
 		exists bool
 	)
 
-	logPath := fmt.Sprintf("%s/%s/", this.logPrefix, this.svrName)
+	logPath := fmt.Sprintf("%s/", this.logPrefix)
 	logName := fmt.Sprintf("%s.log", this.svrName)
 	logFile := logPath + logName
 
