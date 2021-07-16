@@ -26,7 +26,7 @@ import (
 	"github.com/tiny911/gobase/utils"
 
 	"github.com/gorilla/handlers"
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
