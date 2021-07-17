@@ -229,7 +229,6 @@ func (s *Server) httpServer() error {
 
 	handler := mux.NewRouter()
 	handler.Handle("/", handlers.CompressHandler(runtimeMux))
-	handler.Use(mux.CORSMethodMiddleware(handler))
 
 	s.HTTPSvr = &http.Server{
 		Addr:    fmt.Sprintf(":%d", s.httpPort),
