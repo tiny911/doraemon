@@ -26,6 +26,7 @@ import (
 	"github.com/tiny911/gobase/utils"
 
 	"github.com/gorilla/handlers"
+	"github.com/gorilla/mux"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
@@ -226,8 +227,9 @@ func (s *Server) httpServer() error {
 		}
 	}
 
-	handler := http.DefaultServeMux
+	handler := mux.NewRouter()
 	handler.Handle("/", handlers.CompressHandler(runtimeMux))
+	handler.Use(mux.CORSMethodMiddleware(handler))
 
 	s.HTTPSvr = &http.Server{
 		Addr:    fmt.Sprintf(":%d", s.httpPort),
