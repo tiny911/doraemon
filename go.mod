@@ -11,7 +11,7 @@ require (
 	github.com/prometheus/client_golang v1.11.0
 	github.com/tiny911/gobase v0.0.0-20210114101630-bd918375733f
 	go.uber.org/zap v1.18.1
-	golang.org/x/net v0.0.0-20210614182718-04defd469f4e
+	golang.org/x/net v0.7.0
 	google.golang.org/grpc v1.39.0
 	gopkg.in/yaml.v2 v2.4.0
 )
